@@ -1,0 +1,41 @@
+﻿@page "/AuthComp"
+@inject IAuthorizationService AuthorizationService
+<h3>AuthorizeComponentPage</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <p>You are logged in!</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not logged in!</p>
+    </NotAuthorized>
+    <Authorizing>
+        <p>You are authorizing!</p>
+    </Authorizing>
+</AuthorizeView>
+
+<p>@message</p>
+@code {
+    string message = "You are not logged in";
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if(authenticationState is not null)
+        {
+            var authstate = await authenticationState;
+            var user = authstate?.User;
+
+            if(user is not null)
+            {
+                if(user.Identity is not null && user.Identity.IsAuthenticated)
+                {
+                    message = "You are logged in!";
+                }
+            }
+        }
+    }
+}
