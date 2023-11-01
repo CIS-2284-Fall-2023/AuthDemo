@@ -1,8 +1,10 @@
 using HackerSpace.Server.Data;
 using HackerSpace.Server.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HackerSpace
 {
@@ -19,10 +21,18 @@ namespace HackerSpace
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+                {
+                    options.IdentityResources["openid"].UserClaims.Add("name");
+                    options.ApiResources.Single().UserClaims.Add("name");
+                    options.IdentityResources.Single().UserClaims.Add("role");
+                    options.ApiResources.Single().UserClaims.Add("role");
+                });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
 
             builder.Services.AddAuthentication()
                 .AddIdentityServerJwt();
