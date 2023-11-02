@@ -29,7 +29,7 @@ namespace HackerSpace
                 {
                     options.IdentityResources["openid"].UserClaims.Add("name");
                     options.ApiResources.Single().UserClaims.Add("name");
-                    options.IdentityResources.Single().UserClaims.Add("role");
+                    options.IdentityResources["openid"].UserClaims.Add("role");
                     options.ApiResources.Single().UserClaims.Add("role");
                 });
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
