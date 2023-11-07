@@ -1,6 +1,6 @@
 ﻿@page "/editpost/{Id:int}"
 @page "/editpost"
-
+@attribute [Authorize(Roles ="Admin")]
 @inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager NavManager
 
@@ -72,7 +72,7 @@ else
     {
         if(post?.Id == 0)//New Post
         {
-            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            var client = HttpClientFactory.CreateClient("HackerSpace.ProtectedServerAPI");
             var result = await client.PostAsJsonAsync<Post>("api/Posts", post);
             if(result.IsSuccessStatusCode)
             {
@@ -90,7 +90,7 @@ else
         }
         else //update existing post
         {
-            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            var client = HttpClientFactory.CreateClient("HackerSpace.ProtectedServerAPI");
             var result = await client.PutAsJsonAsync<Post>("api/Posts", post);
         }
         NavManager.NavigateTo("blog");

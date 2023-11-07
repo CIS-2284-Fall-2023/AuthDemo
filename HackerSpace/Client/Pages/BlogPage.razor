@@ -19,11 +19,20 @@ else
         <p>
             @post.Date.ToString("D")
             <a href="post/@post.Id">@post.Title</a>
-            <button type="button" class="btn btn-primary" @onclick="()=>OnEditClick(post.Id)">Edit</button>
-            <button type="button" class="btn btn-danger" @onclick="()=>OnDeleteClickAsync(post.Id)">Delete</button>
+            <AuthorizeView Roles="Admin">
+               <Authorized>
+                    <button type="button" class="btn btn-primary" @onclick="()=>OnEditClick(post.Id)">Edit</button>
+                    <button type="button" class="btn btn-danger" @onclick="()=>OnDeleteClickAsync(post.Id)">Delete</button>
+               </Authorized>
+            </AuthorizeView>
+            
         </p>
     }
-    <button type="button" class="btn btn-primary" @onclick="OnAddPostClick">Add Post</button>
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <button type="button" class="btn btn-primary" @onclick="OnAddPostClick">Add Post</button>
+        </Authorized>
+    </AuthorizeView>
     @message
 }
 
@@ -81,7 +90,7 @@ else
 
     protected async Task OnDeleteClickAsync(int id)
     {
-        var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+        var client = HttpClientFactory.CreateClient("HackerSpace.ProtectedServerAPI");
         var result = await client.DeleteAsync($"api/Posts/{id}");
         NavManager.NavigateTo($"/blog", true); //Force reload of page
     }

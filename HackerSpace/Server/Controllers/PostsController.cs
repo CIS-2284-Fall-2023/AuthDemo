@@ -1,9 +1,11 @@
 ﻿using Hackerspace.Server.Interfaces;
 using Hackerspace.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hackerspace.Server.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PostsController : ControllerBase
@@ -15,6 +17,7 @@ namespace Hackerspace.Server.Controllers
             _postsRepo = postsRepo;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("{page:int}/{pageSize:int}")]
         public IEnumerable<Post> GetAllPosts(int page, int pageSize)
@@ -22,6 +25,7 @@ namespace Hackerspace.Server.Controllers
             return _postsRepo.GetPosts(page, pageSize);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("{id:int}")]
         public Post? GetPost(int id)
