@@ -1,7 +1,7 @@
 ﻿@page "/editpost/{Id:int}"
 @page "/editpost"
 
-@inject HttpClient Http
+@inject IHttpClientFactory HttpClientFactory
 @inject NavigationManager NavManager
 
 <h3>Blog Post</h3>
@@ -59,7 +59,8 @@ else
         }
         else
         {
-            post = await Http.GetFromJsonAsync<Post>($"api/Posts/{Id}");
+            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            post = await client.GetFromJsonAsync<Post>($"api/Posts/{Id}");
             if(post == null)
             {
                 //TODO: Alert
@@ -71,7 +72,8 @@ else
     {
         if(post?.Id == 0)//New Post
         {
-            var result = await Http.PostAsJsonAsync<Post>("api/Posts", post);
+            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            var result = await client.PostAsJsonAsync<Post>("api/Posts", post);
             if(result.IsSuccessStatusCode)
             {
                 NavManager.NavigateTo("blog");
@@ -88,7 +90,8 @@ else
         }
         else //update existing post
         {
-            var result = await Http.PutAsJsonAsync<Post>("api/Posts", post);
+            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            var result = await client.PutAsJsonAsync<Post>("api/Posts", post);
         }
         NavManager.NavigateTo("blog");
     }

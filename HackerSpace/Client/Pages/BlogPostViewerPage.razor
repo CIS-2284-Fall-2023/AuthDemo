@@ -1,5 +1,5 @@
 ﻿@page "/post/{Id:int}"
-@inject HttpClient Http
+@inject IHttpClientFactory HttpClientFactory
 <h3>BlogPostViewerPage</h3>
 
 @if(post is null)
@@ -23,6 +23,7 @@ else
     protected async override Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
-        post = await Http.GetFromJsonAsync<Post>($"api/Posts/{Id}");
+        var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+        post = await client.GetFromJsonAsync<Post>($"api/Posts/{Id}");
     }
 }
