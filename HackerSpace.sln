@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerSpace.Server", "HackerSpace\Server\HackerSpace.Server.csproj", "{1ECAB041-7484-4CA4-9377-49845920A773}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackerSpace.Server", "HackerSpace\Server\HackerSpace.Server.csproj", "{1ECAB041-7484-4CA4-9377-49845920A773}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerSpace.Client", "HackerSpace\Client\HackerSpace.Client.csproj", "{69612B16-3B88-4F93-8972-323E56EFFD86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackerSpace.Client", "HackerSpace\Client\HackerSpace.Client.csproj", "{69612B16-3B88-4F93-8972-323E56EFFD86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerSpace.Shared", "HackerSpace\Shared\HackerSpace.Shared.csproj", "{CAE9F3B9-4753-4823-B4B4-79EA7F1C6010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackerSpace.Shared", "HackerSpace\Shared\HackerSpace.Shared.csproj", "{CAE9F3B9-4753-4823-B4B4-79EA7F1C6010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

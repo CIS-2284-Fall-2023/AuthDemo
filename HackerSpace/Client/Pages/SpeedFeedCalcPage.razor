@@ -1,0 +1,17 @@
+﻿@page "/speedfeedcalc"
+
+<h3>SpeedAndFeedCalcPage</h3>
+
+<SpeedFeedCalcComponent OnSpeedFeedCalculated="UpdateResult" />
+<p>@resultInParent</p>
+
+
+@code {
+    string resultInParent = "Nothing hapened yet";
+
+    private async Task UpdateResult(string result)
+    {
+        await Task.Delay(10000);
+        resultInParent = $"Button clicked in child component! Child calculated: {result}.";
+    }
+}

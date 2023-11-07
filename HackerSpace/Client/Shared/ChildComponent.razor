@@ -1,0 +1,23 @@
+﻿<h3>ChildComponent</h3>
+
+<p>@Text</p>
+
+<button type="button" class="btn btn-primary" @onclick = "OnClick">Change parent text</button>
+
+<p>@action</p>
+@code {
+    [Parameter]
+    public string Text { get; set; } = "Original text set in child component";
+
+    [Parameter]
+    public EventCallback<string> Callback { get; set; }
+
+    private string action = "Click the button.";
+    private int seq = 0;
+    public async Task OnClick()
+    {
+        action = $"Clicked at {DateTime.Now.ToString("T")}";
+        seq++;
+        await Callback.InvokeAsync(action);
+    }
+}

@@ -1,3 +1,5 @@
+using Hackerspace.Server.Interfaces;
+using Hackerspace.Server.Repos;
 using HackerSpace.Server.Data;
 using HackerSpace.Server.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -39,6 +41,9 @@ namespace HackerSpace
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+
+            // Inject data objects
+            builder.Services.AddTransient<IPostsRepo, PostsRepo>();
 
             var app = builder.Build();
 
