@@ -9,6 +9,7 @@ namespace HackerSpace.Server.Data
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Badge> Badges { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
