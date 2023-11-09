@@ -1,6 +1,29 @@
 ﻿@page "/Badges"
+@inject IHttpClientFactory HttpClientFactory
 <h3>Badges Page</h3>
 
-@code {
+@if (badges == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @foreach (var badge in badges)
+    {
+        <p>
+            @badge.Name
+        </p>
+    }
+}
 
+
+@code {
+    List<Badge>? badges;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+        badges = await client.GetFromJsonAsync<List<Badge>>($"api/Badges");
+    }
 }
