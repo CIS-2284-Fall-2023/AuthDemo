@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
-using Hackerspace.Shared.Models;
-using HackerSpace.Server.Models;
+using HackerSpace.Shared.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

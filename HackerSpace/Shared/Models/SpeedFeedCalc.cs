@@ -1,4 +1,4 @@
-﻿namespace Hackerspace.Shared.Models
+﻿namespace HackerSpace.Shared.Models
 {
     public class SpeedFeedCalc
     {

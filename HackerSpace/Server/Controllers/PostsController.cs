@@ -1,9 +1,9 @@
-﻿using Hackerspace.Server.Interfaces;
-using Hackerspace.Shared.Models;
+﻿using HackerSpace.Server.Interfaces;
+using HackerSpace.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hackerspace.Server.Controllers
+namespace HackerSpace.Server.Controllers
 {
     [Authorize(Roles ="Admin")]
     [Route("api/[controller]")]

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace HackerSpace.Server.Models
+namespace HackerSpace.Shared.Models
 {
     public class ApplicationUser : IdentityUser
     {

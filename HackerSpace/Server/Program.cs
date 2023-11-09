@@ -1,10 +1,9 @@
-using Hackerspace.Server.Interfaces;
-using Hackerspace.Server.Repos;
 using HackerSpace.Server.Data;
-using HackerSpace.Server.Models;
+using HackerSpace.Server.Interfaces;
+using HackerSpace.Server.Repos;
+using HackerSpace.Shared.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -19,7 +18,7 @@ namespace HackerSpace
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlite(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

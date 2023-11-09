@@ -1,8 +1,8 @@
-﻿using Hackerspace.Server.Interfaces;
-using Hackerspace.Shared.Models;
+﻿using HackerSpace.Server.Interfaces;
+using HackerSpace.Shared.Models;
 using HackerSpace.Server.Data;
 
-namespace Hackerspace.Server.Repos
+namespace HackerSpace.Server.Repos
 {
     public class PostsRepo : IPostsRepo
     {

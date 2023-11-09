@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Hackerspace.Shared.Models
+namespace HackerSpace.Shared.Models
 {
     public class Post
     {

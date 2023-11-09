@@ -1,8 +1,8 @@
-﻿using Hackerspace.Server.Interfaces;
-using Hackerspace.Shared.Models;
+﻿using HackerSpace.Server.Interfaces;
+using HackerSpace.Shared.Models;
 using System.Collections;
 
-namespace Hackerspace.Server.Mocks
+namespace HackerSpace.Server.Mocks
 {
     public class PostsRepoMock : IPostsRepo
     {

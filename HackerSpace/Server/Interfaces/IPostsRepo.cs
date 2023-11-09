@@ -1,6 +1,6 @@
-﻿using Hackerspace.Shared.Models;
+﻿using HackerSpace.Shared.Models;
 
-namespace Hackerspace.Server.Interfaces
+namespace HackerSpace.Server.Interfaces
 {
     public interface IPostsRepo
     {
