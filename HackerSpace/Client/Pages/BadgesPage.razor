@@ -11,7 +11,8 @@ else
     @foreach (var badge in badges)
     {
         <p>
-            @badge.Name
+            <a href="/Badge/@badge.Id">@badge.Name</a>
+            @badge.Description
         </p>
     }
 }
