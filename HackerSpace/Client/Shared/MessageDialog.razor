@@ -1,0 +1,39 @@
+﻿@if (Show)
+{
+    <div class="modal show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">@Title</h4>
+                    <button type="button" class="btn-close" @onclick="@ModalOKClick" aria-label="Close" />
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>@Message</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_primary" @onclick="@ModalOKClick">OK</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool Show { get; set; } = false;
+
+    [Parameter]
+    public string Title { get; set; } = "Message";
+
+    [Parameter]
+    public string Message { get; set; } = "";
+
+    void ModalOKClick() => Show = false;
+}

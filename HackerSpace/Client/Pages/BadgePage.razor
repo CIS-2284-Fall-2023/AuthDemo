@@ -48,32 +48,7 @@ else
 </div>
 <p>@message</p>
 
-@if (showModal)
-{
-    <div class="modal show" id="myModal" style="display:block" aria-modal="true" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Badge saved successfully!</h4>
-                    <button type="button" class="close" @onclick="@ModalOKClick">&times;</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <p>Your changes were saved!</p>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn" @onclick="@ModalOKClick">OK</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-}
+<MessageDialog Show="showModal" Message="Badge saved successfully!" Title="Your changes were saved!" />
 
 @code {
     [Parameter]
