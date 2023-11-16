@@ -1,6 +1,7 @@
 ﻿@page "/Badge/{Id:int}"
 @inject IHttpClientFactory HttpClientFactory
 @inject ILogger<BadgePage> Logger
+@inject NavigationManager NavigationManager
 
 <h3>Badge Page</h3>
 
@@ -48,13 +49,10 @@ else
 </div>
 <p>@message</p>
 
-<MessageDialog Show="showModal" Message="Badge saved successfully!" Title="Your changes were saved!" />
 
 @code {
     [Parameter]
     public int Id { get; set; }
-
-    bool showModal = false;
 
     public Badge? Badge { get; set; }
     private string message = "";
@@ -76,15 +74,7 @@ else
         if(Badge != null)
         {
             await client.PutAsJsonAsync<Badge>($"api/Badges/{Id}", Badge);
-            showModal = true;
+            NavigationManager.NavigateTo("/Badges");
         }
-    }
-    void ModalOKClick() => showModal = false;
-
-    void ModalConfirm()
-    {
-        //TODO: Confirm action
-
-        showModal = false;
     }
 }
