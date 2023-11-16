@@ -1,4 +1,6 @@
 ﻿@page "/Badge/{Id:int}"
+@page "/Badge/"
+
 @inject IHttpClientFactory HttpClientFactory
 @inject ILogger<BadgePage> Logger
 @inject NavigationManager NavigationManager
@@ -52,7 +54,7 @@ else
 
 @code {
     [Parameter]
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     public Badge? Badge { get; set; }
     private string message = "";
@@ -60,8 +62,15 @@ else
     {
         Logger.LogInformation($"OnParametersSetAsync called from BadgePage.razor.");
         await base.OnParametersSetAsync();
-        var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
-        Badge = await client.GetFromJsonAsync<Badge?>($"api/Badges/{Id}");
+        if (Id == null)
+        {
+            Badge = new Badge();
+        }
+        else
+        {
+            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            Badge = await client.GetFromJsonAsync<Badge?>($"api/Badges/{Id}");
+        }
         //TODO: Add try catch. Notify user if Id does not exist in database
     }
 
@@ -73,8 +82,17 @@ else
         var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
         if(Badge != null)
         {
-            await client.PutAsJsonAsync<Badge>($"api/Badges/{Id}", Badge);
-            NavigationManager.NavigateTo("/Badges");
+            if (Id == null)
+            {
+
+                await client.PostAsJsonAsync<Badge>($"api/Badges/", Badge);
+                NavigationManager.NavigateTo("/Badges");
+            }
+            else
+            {
+                await client.PutAsJsonAsync<Badge>($"api/Badges/{Id}", Badge);
+                NavigationManager.NavigateTo("/Badges");
+            }
         }
     }
 }
