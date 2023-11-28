@@ -11,9 +11,12 @@ else
     @foreach (var badge in badges)
     {
         <p>
-            @badge.Name
+            <a href="/Badge/@badge.Id">@badge.Name</a>
+            @badge.Description
+            <button @onclick="@(()=>DeleteClickedAsync(badge))" type="button" class="btn btn_danger">Delete</button>
         </p>
     }
+    <a href="/Badge">Add Badge</a>
 }
 
 
@@ -25,5 +28,13 @@ else
         await base.OnInitializedAsync();
         var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
         badges = await client.GetFromJsonAsync<List<Badge>>($"api/Badges");
+    }
+
+    protected async Task DeleteClickedAsync(Badge badge)
+    {
+        var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+        await client.DeleteAsync($"api/Badges/{badge.Id}");
+        badges.Remove(badge);
+        StateHasChanged();
     }
 }

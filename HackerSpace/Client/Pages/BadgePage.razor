@@ -1,0 +1,98 @@
+﻿@page "/Badge/{Id:int}"
+@page "/Badge/"
+
+@inject IHttpClientFactory HttpClientFactory
+@inject ILogger<BadgePage> Logger
+@inject NavigationManager NavigationManager
+
+<h3>Badge Page</h3>
+
+@if (Badge == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="@Badge" OnValidSubmit="@SubmitAsync">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText @bind-Value="Badge!.Name" class="form-control" id="name" aria-describedby="name of badge" placeholder="Enter badge name" />
+            <small id="nameHelp" class="form-text text-muted">Please enter name of badge.</small>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <InputTextArea @bind-Value="Badge!.Description" class="form-control" id="description" rows="3" placeholder="Description" />
+            <small id="descriptionHelp" class="form-text text-muted">Please enter description of badge.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+}
+<!-- Modal -->
+<div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<p>@message</p>
+
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    public Badge? Badge { get; set; }
+    private string message = "";
+    protected async override Task OnParametersSetAsync()
+    {
+        Logger.LogInformation($"OnParametersSetAsync called from BadgePage.razor.");
+        await base.OnParametersSetAsync();
+        if (Id == null)
+        {
+            Badge = new Badge();
+        }
+        else
+        {
+            var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+            Badge = await client.GetFromJsonAsync<Badge?>($"api/Badges/{Id}");
+        }
+        //TODO: Add try catch. Notify user if Id does not exist in database
+    }
+
+    private async Task SubmitAsync()
+    {
+        Logger.LogInformation($"Submit clicked in Badge Page.");
+
+        //call api and send updated badge
+        var client = HttpClientFactory.CreateClient("HackerSpace.PublicServerAPI");
+        if(Badge != null)
+        {
+            if (Id == null)
+            {
+
+                await client.PostAsJsonAsync<Badge>($"api/Badges/", Badge);
+                NavigationManager.NavigateTo("/Badges");
+            }
+            else
+            {
+                await client.PutAsJsonAsync<Badge>($"api/Badges/{Id}", Badge);
+                NavigationManager.NavigateTo("/Badges");
+            }
+        }
+    }
+}
